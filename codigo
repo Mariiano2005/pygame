@@ -10,6 +10,15 @@ pygame.init()
 imagen = pygame.image.load("estadio-01.jpg")
 imagen = pygame.transform.scale(imagen,(800,600))
 
+imagen_pj = pygame.image.load("velez.jpg")
+imagen_pj = pygame.transform.scale(imagen_pj,(80,60))
+
+imagen_2 = pygame.image.load("libertadores.jpg")
+imagen_2 = pygame.transform.scale(imagen_2,(70,70))
+
+imagen_3 = pygame.image.load("libertadores.jpg")
+imagen_3 = pygame.transform.scale(imagen_2,(70,70))
+
 # Configuración de la pantalla
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -31,6 +40,10 @@ enemy_x = random.randint(0, WIDTH - enemy_size)
 enemy_y = 0
 enemy_speed = 20
 
+enemy_size_2 = 50
+enemy_x_2 = random.randint(0, WIDTH - enemy_size_2)
+enemy_y_2 = 0
+enemy_speed_2 = 20
 
 # Reloj
 clock = pygame.time.Clock()
@@ -54,10 +67,16 @@ while running:
 
     # Mover al enemigo
     enemy_y += enemy_speed
+    enemy_y_2 += enemy_speed_2
 
     # Verificar colisión
     if player_x < enemy_x + enemy_size and player_x + player_size > enemy_x:
         if player_y < enemy_y + enemy_size and player_y + player_size > enemy_y:
+            print("¡Colisión!")
+            running = False
+    
+    if player_x < enemy_x_2 + enemy_size_2 and player_x + player_size > enemy_x_2:
+        if player_y < enemy_y_2 + enemy_size_2 and player_y + player_size > enemy_y_2:
             print("¡Colisión!")
             running = False
 
@@ -68,10 +87,15 @@ while running:
     
 
     pygame.draw.rect(screen, RED, (player_x, player_y, player_size, player_size))
+    pygame.draw.rect(screen, RED, (enemy_x_2, enemy_y_2, enemy_size_2, enemy_size_2))
     pygame.draw.rect(screen, RED, (enemy_x, enemy_y, enemy_size, enemy_size))
 
-    
-    
+    screen.blit(imagen_pj,(player_x, player_y, player_size, player_size))
+
+    screen.blit(imagen_2,(enemy_x, enemy_y, enemy_size, enemy_size))
+    screen.blit(imagen_3,(enemy_x_2, enemy_y_2, enemy_size_2, enemy_size_2))
+
+
     # Actualizar la pantalla
     pygame.display.update()
 
@@ -82,6 +106,11 @@ while running:
     if enemy_y > HEIGHT:
         enemy_x = random.randint(0, WIDTH - enemy_size)
         enemy_y = 0
+        score += 1
+    
+    if enemy_y_2 > HEIGHT:
+        enemy_x_2 = random.randint(0, WIDTH - enemy_size_2 )
+        enemy_y_2 = 0
         score += 1
 
 # Fin del juego
