@@ -1,8 +1,14 @@
 import pygame
 import random
 
+posImag = [0,0]
+
+
 # Inicializar Pygame
 pygame.init()
+
+imagen = pygame.image.load("estadio-01.jpg")
+imagen = pygame.transform.scale(imagen,(800,600))
 
 # Configuración de la pantalla
 WIDTH, HEIGHT = 800, 600
@@ -17,13 +23,14 @@ RED = (255, 0, 0)
 player_size = 50
 player_x = (WIDTH - player_size) // 2
 player_y = HEIGHT - 2 * player_size
-player_speed = 5
+player_speed = 20
 
 # Enemigo
 enemy_size = 50
 enemy_x = random.randint(0, WIDTH - enemy_size)
 enemy_y = 0
-enemy_speed = 5
+enemy_speed = 20
+
 
 # Reloj
 clock = pygame.time.Clock()
@@ -56,9 +63,15 @@ while running:
 
     # Dibujar en la pantalla
     screen.fill(WHITE)
+
+    screen.blit(imagen,(posImag))
+    
+
     pygame.draw.rect(screen, RED, (player_x, player_y, player_size, player_size))
     pygame.draw.rect(screen, RED, (enemy_x, enemy_y, enemy_size, enemy_size))
 
+    
+    
     # Actualizar la pantalla
     pygame.display.update()
 
